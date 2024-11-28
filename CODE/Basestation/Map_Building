@@ -1,0 +1,37 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+def map_inputs(previous_pos,state):
+    new_pos = previous_pos+state
+    pos_x,pos_y = new_pos[0],new_pos[1]
+    
+    return new_pos
+# state format{
+#     "axes": [0.0, 0.0],
+#     "buttons": [0, 0, 0]
+# }
+
+
+# Convert to float arrays
+x = np.array([1, 1, 2,2 ,3])
+s = np.array([1, 1, 1 ,2 , 2])
+t = np.array([1, 2, 2,3 ,3])
+
+# Scatter plot
+ax.scatter(x, s, zs=t, s=200, label='True Position')
+
+
+
+# Connect the points with a line
+ax.plot(x, s, t, color='b', label='Connecting Line')
+
+# Set labels
+ax.set_xlabel("x axis")
+ax.set_ylabel("y axis")
+ax.set_zlabel("z axis")
+
+
+
+plt.show()
