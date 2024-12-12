@@ -2,6 +2,8 @@ import cv2
 import numpy as np
 import socket
 import struct
+from Rust_Detection import rust_detect
+import pygame
 
 # Create a server socket
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -45,6 +47,7 @@ try:
                 break
             data += packet
 
+
         if len(data) < image_len:
             print("Not enough data received for the image.")
             break
@@ -56,7 +59,9 @@ try:
 
         #Decode the JPEG image from bytes
         frame = cv2.imdecode(np.frombuffer(frame_data, np.uint8), cv2.IMREAD_COLOR)
-        
+        temp_frame = cv2.imwrite('Temp_frame.jpg',frame)
+        rust_detect('Temp_frame.jpg')
+
         if frame is None:
             print("Failed to decode frame")
             continue
@@ -65,7 +70,7 @@ try:
         cv2.imshow('Video Stream', frame)
         out.write(frame)
         print("Displaying frame")
-
+        pygame.time.wait(30)
         # Wait for 'q' key to stop the program
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
@@ -78,4 +83,3 @@ finally:
     conn.close()
     server_socket.close()
     cv2.destroyAllWindows()
-

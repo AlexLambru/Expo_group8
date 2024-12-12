@@ -3,21 +3,19 @@ import numpy as np
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
-def map_inputs(previous_pos,state):
-    new_pos = previous_pos+state
-    pos_x,pos_y = new_pos[0],new_pos[1]
+def head_direction(head,inputs):
     
-    return new_pos
+
+
 # state format{
-#     "axes": [0.0, 0.0],
-#     "buttons": [0, 0, 0]
+#     "axes": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],(left stick(x,y),right stick(x,y),l2,r2)
+#     "buttons": [0, 0, 0,0](square,x,circle,triangle)
 # }
 
 
+
+
 # Convert to float arrays
-x = np.array([1, 1, 2,2 ,3])
-s = np.array([1, 1, 1 ,2 , 2])
-t = np.array([1, 2, 2,3 ,3])
 
 # Scatter plot
 ax.scatter(x, s, zs=t, s=200, label='True Position')
