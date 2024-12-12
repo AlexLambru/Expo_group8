@@ -4,7 +4,7 @@ import socket
 import struct
 from Rust_Detection import rust_detect
 import pygame
-
+# after running this file and ssh-ing into the rasp pi, run 'python /home/Snake/RaspberryPi/RaspPi_Client.py' inside the command prompt
 # Create a server socket
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.bind(('', 6544))
