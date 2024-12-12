@@ -19,6 +19,7 @@ print(f"Connection established with {addr}")
 data = b""
 payload_size = struct.calcsize("<L")
 out = cv2.VideoWriter('output.mp4', -1, 20.0, (640,480))
+frame_nr = 0
 try:
     while True:
         print("Waiting to receive frame data...")
@@ -60,7 +61,7 @@ try:
         #Decode the JPEG image from bytes
         frame = cv2.imdecode(np.frombuffer(frame_data, np.uint8), cv2.IMREAD_COLOR)
         temp_frame = cv2.imwrite('Temp_frame.jpg',frame)
-        rust_detect('Temp_frame.jpg')
+        frame_nr=rust_detect('Temp_frame.jpg',frame_nr)
 
         if frame is None:
             print("Failed to decode frame")
