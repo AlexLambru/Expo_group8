@@ -7,10 +7,10 @@ from sys import argv
 import numpy as np
 import os
 import glob
-
+import time.time as now
 count = 0
-
-def rust_detect(file,i):# where is is the number of frames that detected rust
+last_shot=now()
+def rust_detect(file,i,last_shot):# where is is the number of frames that detected rust
 	img = cv2.imread(file)
 	img_hsv=cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 	
@@ -28,7 +28,7 @@ def rust_detect(file,i):# where is is the number of frames that detected rust
 	mask = mask0+mask1
 	
 	output_img = cv2.bitwise_and(img,img,mask=mask)
-	if (np.sum(mask)/255>100):
+	if (np.sum(mask)/255>100) and (last_shot+5>now):
 		file_name = 'Frame'+str(i)+'.jpg'
 		path = "D:\School\Projects\Expo Code\Expo_group8\Rust_images"
 		cv2.imwrite(os.path.join(path ,file_name),img)
@@ -39,7 +39,7 @@ def rust_detect(file,i):# where is is the number of frames that detected rust
 	cv2.imwrite('image%d.jpg'%count,img)
 	#cv2.destroyAllWindows()
 	os.system("cls")
-	return i
+	return i, last_shot
 	
 	
 	
