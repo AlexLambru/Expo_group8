@@ -28,8 +28,8 @@ def rust_detect(file,i,last_shot):# where is is the number of frames that detect
 	mask = mask0+mask1
 	
 	output_img = cv2.bitwise_and(img,img,mask=mask)
-	if (np.sum(mask)/255>100) and (last_shot+5>now):
-		file_name = 'Frame'+str(i)+'.jpg'
+	if (np.sum(mask)/255>1500):
+		file_name = 'Frame'+str(i)+str(np.sum(mask)/255)+'.jpg'
 		path = "D:\School\Projects\Expo Code\Expo_group8\Rust_images"
 		cv2.imwrite(os.path.join(path ,file_name),img)
 		i+=1
