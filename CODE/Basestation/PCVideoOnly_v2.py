@@ -61,7 +61,7 @@ try:
         #Decode the JPEG image from bytes
         frame = cv2.imdecode(np.frombuffer(frame_data, np.uint8), cv2.IMREAD_COLOR)
         temp_frame = cv2.imwrite('Temp_frame.jpg',frame)
-        frame_nr,screen_shot_time=rust_detect('Temp_frame.jpg',frame_nr,screen_shot_time)
+        frame_nr=rust_detect('Temp_frame.jpg',frame_nr)
 
         if frame is None:
             print("Failed to decode frame")

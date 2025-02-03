@@ -7,10 +7,9 @@ from sys import argv
 import numpy as np
 import os
 import glob
-import time.time as now
+import time 
 count = 0
-last_shot=now()
-def rust_detect(file,i,last_shot):# where is is the number of frames that detected rust
+def rust_detect(file,i):# where is is the number of frames that detected rust
 	img = cv2.imread(file)
 	img_hsv=cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 	
@@ -28,28 +27,30 @@ def rust_detect(file,i,last_shot):# where is is the number of frames that detect
 	mask = mask0+mask1
 	
 	output_img = cv2.bitwise_and(img,img,mask=mask)
-	if (np.sum(mask)/255>1500) and ((last_shot+5)>now()):
-		file_name = 'Frame'+str(i)+str(np.sum(mask)/255)+'.jpg'
-		path = "D:\School\Projects\Expo Code\Expo_group8\Rust_images"
-		cv2.imwrite(os.path.join(path ,file_name),img)
+	if (np.sum(mask)/255>15000):
 		i+=1
+		if i%3 ==0:
+			print(""" Rust detected.\n\n""")
+			file_name = 'Frame'+str(i)+str(np.sum(mask)/255)+'.jpg'
+			path = "D:\School\Projects\Expo Code\Expo_group8\Rust_images"
+			cv2.imwrite(os.path.join(path ,file_name),img)
+			warning = cv2.imread('Warning.png')
+			cv2.imshow('Warning', warning)
+		
 	
 	print("\n\n\n Number of pixels depicting rust \n >> %d"%(np.sum(mask)/255))
 	cv2.imwrite('output_image%d.jpg'%count,output_img)
 	cv2.imwrite('image%d.jpg'%count,img)
 	#cv2.destroyAllWindows()
 	os.system("cls")
-	return i, last_shot
+	return i
 	
 	
 	
 os.system("color 0a")
 os.system("cls")
 
-print(""" Welcome to the rust detection software!! 
- The software detects the rusted portion of metal
- and calculates nuber of rust piels for 
- comparitive analysis.\n\n""")
+
 print("**********************************************")
 
 images = glob.glob("Images/*.jpg")

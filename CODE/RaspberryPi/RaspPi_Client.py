@@ -17,7 +17,7 @@ bus = smbus2.SMBus(I2C_BUS)
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind(("", 12345))
 
-pc_ip = "192.168.254.175"  # Replace with the IP address of your PC
+pc_ip = "192.168.95.175"  # Replace with the IP address of your PC
 video_port = 6544  # You can choose any port you like
 
 # Create a TCP socket for video streaming
@@ -31,11 +31,10 @@ def send_i2c(data):
 
 # Initialize the camera
 picam2 = Picamera2()
-picam2.configure(picam2.create_video_configuration(main={"size": (640, 480)}))
+picam2.configure(picam2.create_video_configuration(main={"size": (640, 480),'format': 'RGB888'}))
 picam2.start()
 sock.settimeout(0.1)  # 100ms timeout
-try:
-    video_sock.settimeout(0.4)  # Add a timeout to the video socket
+try:  # Add a timeout to the video socket
     while True:
         try:
             data, _ = sock.recvfrom(1024)
